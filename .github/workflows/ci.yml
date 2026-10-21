@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
   test:
     name: Python Tests
@@ -49,10 +52,12 @@ jobs:
           registry: docker.io
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          ecr: false
+          logout: true
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
           context: .
           push: true
-          tags: bhuvana89941/ci-cd-cloud-project:latest
+          tags: |
+            bhuvana89941/ci-cd-cloud-project:latest
